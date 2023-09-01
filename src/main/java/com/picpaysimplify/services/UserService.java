@@ -5,6 +5,7 @@ import com.picpaysimplify.domain.user.User;
 import com.picpaysimplify.dtos.UserDTO;
 import com.picpaysimplify.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +18,13 @@ public class UserService {
     @Autowired
     private UserRepository repository;
 
-    public User createUser(UserDTO userData){
+    public User createUser(UserDTO userData) throws Exception {
         User newUser = new User(userData);
-        this.saveUser(newUser);
+        try {
+            this.saveUser(newUser);
+        } catch (DataAccessException exception) {
+            throw new Exception("User already exist");
+        }
         return newUser;
     }
 
