@@ -22,14 +22,18 @@ public class UserService {
         User newUser = new User(userData);
         try {
             this.saveUser(newUser);
+            return newUser;
         } catch (DataAccessException exception) {
             throw new Exception("User already exist");
         }
-        return newUser;
     }
 
-    public void saveUser(User user){
-        this.repository.save(user);
+    public void saveUser(User user) throws Exception {
+        try {
+            this.repository.save(user);
+        } catch (DataAccessException exception) {
+            throw new Exception("System couldn't save the user");
+        }
     }
 
     public User findUserById(UUID id) throws Exception {

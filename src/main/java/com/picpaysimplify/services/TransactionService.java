@@ -12,7 +12,9 @@ import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class TransactionService {
@@ -67,5 +69,32 @@ public class TransactionService {
             String message = (String) authorizationResponse.getBody().get("message");
             return "Autorizado".equalsIgnoreCase(message);
         } else return false;
+    }
+
+//    public List<Transaction> getAllTransactionsByUserId(UUID id) throws Exception {
+//        User user = this.userService.findUserById(id);
+//        switch(user.getUserType()){
+//            case MERCHANT -> {
+//                return this.getAllTransactionsByReceiver(id);
+//            }
+//            case COMMON -> {
+//                return this.getAllTransactionsBySender(id);
+//            }
+//        }
+//        return null;
+//    }
+//
+//    public List<Transaction> getAllTransactionsBySender(UUID id) throws Exception {
+//        return (List<Transaction>) this.transactionRepository.findAll().stream()
+//                .filter(transaction -> transaction.getSender().equals(id));
+//    }
+//
+//    public List<Transaction> getAllTransactionsByReceiver(UUID id) throws Exception {
+//        return (List<Transaction>) this.transactionRepository.findAll().stream()
+//                .filter(transaction -> transaction.getReceiver().equals(id));
+//    }
+
+    public List<Transaction> getAllTransactions() {
+        return this.transactionRepository.findAll();
     }
 }
