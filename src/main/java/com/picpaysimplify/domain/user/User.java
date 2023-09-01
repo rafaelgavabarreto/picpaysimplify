@@ -1,4 +1,4 @@
-package com.picpaysimplify.domain.users;
+package com.picpaysimplify.domain.user;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,11 +13,11 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @AllArgsConstructor
-@EqualsAndHashCode(of="user_id")
-public class Users {
+@EqualsAndHashCode(of="id")
+public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private Long user_id;
+    private String id;
     private String first_name;
     private String last_name;
     @Column(unique = true)

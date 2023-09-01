@@ -1,6 +1,6 @@
-package com.picpaysimplify.domain.trasactions;
+package com.picpaysimplify.domain.trasaction;
 
-import com.picpaysimplify.domain.users.Users;
+import com.picpaysimplify.domain.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -16,16 +16,16 @@ import java.time.LocalDateTime;
 @Setter
 @AllArgsConstructor
 @EqualsAndHashCode(of="transaction_id")
-public class Transactions {
+public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private Long transaction_id;
+    private String id;
     private BigDecimal amount;
     @ManyToOne
     @JoinColumn(name="sender_id")
-    private Users sender;
+    private User sender;
     @ManyToOne
     @JoinColumn(name="receiver_id")
-    private Users receiver;
+    private User receiver;
     private LocalDateTime create_at;
 }
