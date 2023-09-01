@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -26,7 +27,7 @@ public class UserService {
         this.repository.save(user);
     }
 
-    public User findUserById(String id) throws Exception {
+    public User findUserById(UUID id) throws Exception {
         return this.repository.findUserById(id).orElseThrow(() -> new Exception("User not found"));
     }
 

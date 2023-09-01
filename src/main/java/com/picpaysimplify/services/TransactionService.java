@@ -25,13 +25,18 @@ public class TransactionService {
     @Autowired
     private RestTemplate restTemplate;
 
-    public void createTransaction(TransactionDTO transaction) throws Exception {
+    @Autowired
+    private NotificationService notificationService;
+
+    public Transaction createTransaction(TransactionDTO transaction) throws Exception {
+
         User sender = this.userService.findUserById(transaction.sender_id());
         User receiver = this.userService.findUserById(transaction.receiver_id());
 
         userService.validateTransaction(sender, transaction.amount());
 
         boolean isAuthorized = this.authorizeTransaction(sender, transaction.amount());
+        System.out.println(isAuthorized);
         if(!isAuthorized){
             throw new Exception("Transaction not authorized");
         }
@@ -49,15 +54,18 @@ public class TransactionService {
         this.userService.saveUser(sender);
         this.userService.saveUser(receiver);
 
+        this.notificationService.sendNotification(sender, "Transaction sent");
+        this.notificationService.sendNotification(receiver, "Transaction received");
+
+        return newTransaction;
     }
 
     public boolean authorizeTransaction(User sender, BigDecimal amount){
         ResponseEntity<Map> authorizationResponse = restTemplate.getForEntity("https://run.mocky.io/v3/8fafdd68-a090-496f-8c9a-3442cf30dae6", Map.class);
 
         if(authorizationResponse.getStatusCode() == HttpStatus.OK){
-//            String message = (String) authorizationResponse.getBody().get("message");
-//            return "Autorizado".equalsIgnoreCase(message);
-            return authorizationResponse.getBody().get("message") == "Autorizado";
+            String message = (String) authorizationResponse.getBody().get("message");
+            return "Autorizado".equalsIgnoreCase(message);
         } else return false;
     }
 }
