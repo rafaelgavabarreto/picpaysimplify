@@ -4,6 +4,7 @@ import com.picpaysimplify.user.User;
 import com.picpaysimplify.notification.NotificationService;
 import com.picpaysimplify.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -56,13 +57,18 @@ public class TransactionService {
         return newTransaction;
     }
 
-    public boolean authorizeTransaction(User sender, BigDecimal amount){
+    public boolean authorizeTransaction(User sender, BigDecimal amount) throws Exception {
         if(sender.getBalance().compareTo(amount) >= 0) {
-            ResponseEntity<Map> authorizationResponse = restTemplate.getForEntity("https://run.mocky.io/v3/8fafdd68-a090-496f-8c9a-3442cf30dae6", Map.class);
+            try {
+                ResponseEntity<Map> authorizationResponse = restTemplate.getForEntity("https://run.mocky.io/v3/8fafdd68-a090-496f-8c9a-3442cf30dae6", Map.class);
 
-            if(authorizationResponse.getStatusCode() == HttpStatus.OK){
-                String message = (String) authorizationResponse.getBody().get("message");
-                return "Autorizado".equalsIgnoreCase(message);
+                if (authorizationResponse.getStatusCode() == HttpStatus.OK) {
+                    String message = (String) authorizationResponse.getBody().get("message");
+                    return "Autorizado".equalsIgnoreCase(message);
+                }
+            } catch (DataAccessException exception) {
+                System.out.println("Error: authorizeTransaction got an exception: " + exception.getMessage());
+                throw new Exception("Transaction is not authorize");
             }
         }
         return false;
