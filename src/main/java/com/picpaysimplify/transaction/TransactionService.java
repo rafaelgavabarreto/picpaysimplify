@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -42,8 +41,7 @@ public class TransactionService {
         if(!isAuthorized){
             throw new Exception("Transaction not authorized");
         }
-
-        Transaction newTransaction = new Transaction(transaction.amount(),sender,receiver, LocalDateTime.now());
+        Transaction newTransaction = new Transaction(transaction.amount(), sender, receiver);
 
         sender.setBalance(sender.getBalance().subtract(transaction.amount()));
         receiver.setBalance(receiver.getBalance().add(transaction.amount()));

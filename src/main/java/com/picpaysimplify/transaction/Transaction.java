@@ -28,6 +28,11 @@ public class Transaction {
     private User receiver;
     private LocalDateTime timestamp;
 
-    public Transaction(BigDecimal amount, User sender, User receiver, LocalDateTime now) {
+    public Transaction(BigDecimal amount, User sender, User receiver) {
+        this.amount = amount;
+        this.sender = sender;
+        this.receiver = receiver;
+        this.timestamp = LocalDateTime.now();
     }
+
 }
