@@ -1,9 +1,5 @@
-package com.picpaysimplify.controllers;
+package com.picpaysimplify.user;
 
-import com.picpaysimplify.domain.user.User;
-import com.picpaysimplify.dtos.UserDTO;
-import com.picpaysimplify.services.UserService;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

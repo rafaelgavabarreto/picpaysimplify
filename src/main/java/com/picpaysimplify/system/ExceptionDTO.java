@@ -1,4 +1,4 @@
-package com.picpaysimplify.dtos;
+package com.picpaysimplify.system;
 
 public record ExceptionDTO(String message, String statusCode) {
 }

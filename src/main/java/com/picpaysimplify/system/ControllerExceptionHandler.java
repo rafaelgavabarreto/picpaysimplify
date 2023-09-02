@@ -1,6 +1,5 @@
 package com.picpaysimplify.system;
 
-import com.picpaysimplify.dtos.ExceptionDTO;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.ResponseEntity;
@@ -10,18 +9,18 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 public class ControllerExceptionHandler {
     @ExceptionHandler(DataIntegrityViolationException.class)
-    public ResponseEntity threadDuplicateEntry(DataIntegrityViolationException exception){
+    public ResponseEntity<ExceptionDTO> threadDuplicateEntry(DataIntegrityViolationException exception){
         ExceptionDTO exceptionDTO = new ExceptionDTO(exception.getMessage(),"400");
         return ResponseEntity.badRequest().body(exceptionDTO);
     }
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity thread404(EntityNotFoundException exception){
+    public ResponseEntity<ExceptionDTO> thread404(EntityNotFoundException exception){
         return ResponseEntity.notFound().build();
     }
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity threadGeneralException(Exception exception){
+    public ResponseEntity<ExceptionDTO> threadGeneralException(Exception exception){
         ExceptionDTO exceptionDTO = new ExceptionDTO(exception.getMessage(),"500");
         return ResponseEntity.internalServerError().body(exceptionDTO);
     }

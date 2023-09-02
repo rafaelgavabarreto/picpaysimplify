@@ -1,6 +1,5 @@
-package com.picpaysimplify.domain.user;
+package com.picpaysimplify.user;
 
-import com.picpaysimplify.dtos.UserDTO;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,8 +17,8 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
-    private String first_name;
-    private String last_name;
+    private String firstName;
+    private String lastName;
     @Column(unique = true)
     private String email;
     private String password;
@@ -29,8 +28,8 @@ public class User {
 
     public User(UserDTO userData){
         this.userType = userData.userType();
-        this.first_name = userData.first_name();
-        this.last_name = userData.last_name();
+        this.firstName = userData.firstName();
+        this.lastName = userData.lastName();
         this.balance = userData.balance();
         this.email = userData.email();
         this.password = userData.password();

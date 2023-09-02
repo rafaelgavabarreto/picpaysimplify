@@ -1,6 +1,6 @@
-package com.picpaysimplify.domain.trasaction;
+package com.picpaysimplify.transaction;
 
-import com.picpaysimplify.domain.user.User;
+import com.picpaysimplify.user.User;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,10 +21,13 @@ public class Transaction {
     private UUID id;
     private BigDecimal amount;
     @ManyToOne
-    @JoinColumn(name="sender_id")
+    @JoinColumn(name="senderId")
     private User sender;
     @ManyToOne
-    @JoinColumn(name="receiver_id")
+    @JoinColumn(name="receiverId")
     private User receiver;
-    private LocalDateTime create_at;
+    private LocalDateTime timestamp;
+
+    public Transaction(BigDecimal amount, User sender, User receiver, LocalDateTime now) {
+    }
 }

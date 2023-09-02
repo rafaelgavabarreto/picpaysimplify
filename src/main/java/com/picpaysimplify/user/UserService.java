@@ -1,12 +1,7 @@
-package com.picpaysimplify.services;
+package com.picpaysimplify.user;
 
-import com.picpaysimplify.domain.user.UserType;
-import com.picpaysimplify.domain.user.User;
-import com.picpaysimplify.dtos.UserDTO;
-import com.picpaysimplify.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
